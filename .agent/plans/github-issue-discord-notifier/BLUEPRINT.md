@@ -8,7 +8,7 @@ Last updated: 2026-10-19
 A dependency-free Go command reads public route configuration, secret Discord
 destinations, and committed delivery state. Focused GitHub and Discord clients
 sit behind interfaces consumed by a monitor service, which applies route-local
-filtering and durable deduplication. GitHub Actions runs the command every five
+filtering and durable deduplication. GitHub Actions runs the command every thirty
 minutes under a single concurrency group and commits changed state.
 
 The first route watches all Issues in `ray-project/kuberay`. Configuration is
@@ -118,7 +118,7 @@ confirms message persistence.
 
 ## GitHub Actions
 
-The workflow runs at a non-zero minute offset every five minutes and via manual
+The workflow runs at a non-zero minute offset every thirty minutes and via manual
 dispatch, uses a standard Linux runner, grants only `contents: write`, and sets
 `concurrency.cancel-in-progress: false`. It runs formatting checks, tests, and
 vet before the notifier. State persistence runs even after a partial notifier
@@ -147,7 +147,7 @@ schedule and manual dispatch.
 
 | Option | Pros | Cons | Decision |
 |---|---|---|---|
-| One scheduled configurable Go command | Free, simple, multi-repo/channel | Five-minute latency; committed state | Chosen |
+| One scheduled configurable Go command | Free, simple, multi-repo/channel | Up to thirty-minute normal latency; committed state | Chosen |
 | Workflow per repository | Easy initial setup | Duplicated logic and secrets wiring | Rejected |
 | Hosted service and database | Near-real-time; richer operations | Hosting cost and ongoing maintenance | Deferred |
 | Fork upstream and install webhook | Familiar webhook flow | Fork Issues are independent from upstream | Rejected |

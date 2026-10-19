@@ -12,7 +12,7 @@ configuration to multiple repositories and channels.
 
 **Architecture:** A dependency-free Go command composes focused configuration,
 state, GitHub, Discord, and monitoring packages. GitHub Actions serializes
-five-minute polls and commits versioned JSON state; route IDs scope checkpoints
+thirty-minute polls and commits versioned JSON state; route IDs scope checkpoints
 and delivered Issue IDs so partial failures retry safely.
 
 **Tech Stack:** Go standard library, GitHub REST API, Discord incoming webhooks,
@@ -57,7 +57,19 @@ GitHub Actions, JSON, `testing`, and `httptest`.
 |---|---|---|---|
 | 01 | [Configuration and durable state](01-configuration-and-state.md) | Approved blueprint | Go module, validated multi-route configuration, initial KubeRay route, versioned state, and atomic persistence |
 | 02 | Notification pipeline | Task 01 | GitHub pagination, Discord delivery, silent baseline, label filtering, deduplication, partial-failure recovery, and focused tests |
-| 03 | Executable and automation | Tasks 01–02 | CLI wiring, safe logs/exit behavior, serialized five-minute Actions workflow, setup/extension README, and full verification |
+| 03 | Executable and automation | Tasks 01–02 | CLI wiring, safe logs/exit behavior, serialized thirty-minute Actions workflow, setup/extension README, and full verification |
+
+### Task 1: Configuration and Durable State
+
+Execute the detailed brief in `01-configuration-and-state.md`.
+
+### Task 2: Notification Pipeline
+
+Completed brief: `02-notification-pipeline.md`.
+
+### Task 3: Executable and Automation
+
+Completed brief: `03-executable-and-automation.md`.
 
 Tasks execute in order. This is intentionally a compact plan for a small
 application: only the active task is expanded, and its checklist describes

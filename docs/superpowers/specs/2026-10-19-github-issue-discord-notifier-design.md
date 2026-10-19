@@ -10,7 +10,7 @@ The application runs on a scheduled GitHub Actions workflow in a public reposito
 
 The first release will:
 
-- poll public GitHub repositories every five minutes;
+- poll public GitHub repositories every thirty minutes;
 - support multiple independent monitor routes;
 - optionally filter a route by one or more labels;
 - send each route to a named Discord destination;
@@ -166,7 +166,7 @@ The request sets `allowed_mentions.parse` to an empty list so user-controlled Is
 - GitHub and Discord non-success responses include the service name, status code, and a bounded response excerpt, but never credentials.
 - GitHub pagination has an explicit page limit to prevent accidental infinite loops.
 - HTTP clients use timeouts.
-- Discord rate-limit responses are treated as failures and retried by the next workflow run; no long-running retry loop is needed for a five-minute scheduler.
+- Discord rate-limit responses are treated as failures and retried by the next workflow run; no long-running retry loop is needed for a thirty-minute scheduler.
 - State is written to a temporary file and renamed so interruption cannot leave partial JSON.
 - The workflow commits and pushes state only when it changed. Its only triggers are `schedule` and `workflow_dispatch`, so a state commit cannot recursively trigger the workflow.
 
@@ -174,7 +174,7 @@ The request sets `allowed_mentions.parse` to an empty list so user-controlled Is
 
 The workflow will:
 
-1. run every five minutes at a non-zero minute offset and support `workflow_dispatch`;
+1. run every thirty minutes at a non-zero minute offset and support `workflow_dispatch`;
 2. use a standard Linux runner;
 3. check out the default branch;
 4. set up the Go version declared by the project;

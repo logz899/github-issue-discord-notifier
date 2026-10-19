@@ -12,7 +12,7 @@ channels does not require Go changes.
 - Application: Go standard library.
 - Source: GitHub REST Issues API.
 - Destination: Discord incoming webhooks.
-- Scheduler: GitHub Actions every five minutes plus manual dispatch.
+- Scheduler: GitHub Actions every thirty minutes plus manual dispatch.
 - Persistence: committed JSON state guarded by workflow concurrency.
 - Tests: Go `testing` and `httptest`.
 

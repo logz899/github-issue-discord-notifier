@@ -1,0 +1,72 @@
+name: Monitor GitHub issues
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-issue-discord-notifier
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Verify
+        run: |
+          go test -race ./...
+          go vet ./...
+          go build -o /tmp/github-issue-discord-notifier ./cmd/notifier
+
+      - name: Run notifier
+        id: notifier
+        env:
+          DISCORD_WEBHOOKS: ${{ secrets.DISCORD_WEBHOOKS }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          go run ./cmd/notifier
+          status=$?
+          set -e
+          echo "status=${status}" >> "${GITHUB_OUTPUT}"
+
+      - name: Persist notifier state
+        if: always()
+        env:
+          TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if git diff --quiet -- state.json; then
+            echo "No state change"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git commit -m "chore: update notifier state"
+          git pull --rebase origin "${TARGET_BRANCH}"
+          git push origin "HEAD:${TARGET_BRANCH}"
+
+      - name: Preserve notifier result
+        if: always()
+        env:
+          NOTIFIER_STATUS: ${{ steps.notifier.outputs.status || '1' }}
+        run: exit "${NOTIFIER_STATUS}"

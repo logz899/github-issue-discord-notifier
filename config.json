@@ -1,0 +1,10 @@
+{
+  "monitors": [
+    {
+      "id": "kuberay-all-issues",
+      "repository": "ray-project/kuberay",
+      "labels": [],
+      "channel": "kuberay"
+    }
+  ]
+}
