@@ -192,6 +192,3 @@ Webhook URLs and tokens must never be committed or printed.
 - One failed route does not prevent independent routes from running.
 - Discord rate limits fail the affected route; the next scheduled run retries
   it instead of holding an Actions runner in a long sleep.
-
-See the approved architecture in
-`.agent/plans/github-issue-discord-notifier/BLUEPRINT.md`.
