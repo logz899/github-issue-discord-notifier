@@ -8,7 +8,7 @@ import (
 	"github.com/logz899/github-issue-discord-notifier/internal/state"
 )
 
-func TestRepositorySeedFilesValidate(t *testing.T) {
+func TestRepositoryFilesValidate(t *testing.T) {
 	root := filepath.Join("..", "..")
 	cfg, err := config.Load(filepath.Join(root, "config.json"))
 	if err != nil {
@@ -30,7 +30,7 @@ func TestRepositorySeedFilesValidate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("load repository state: %v", err)
 	}
-	if loadedState.Version != 1 || len(loadedState.Monitors) != 0 {
-		t.Fatalf("repository state = %#v, want empty version 1 state", loadedState)
+	if loadedState.Version != 1 {
+		t.Fatalf("repository state version = %d, want 1", loadedState.Version)
 	}
 }
