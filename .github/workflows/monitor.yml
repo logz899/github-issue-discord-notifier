@@ -2,7 +2,7 @@ name: Monitor GitHub issues
 
 on:
   schedule:
-    - cron: "22,52 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:

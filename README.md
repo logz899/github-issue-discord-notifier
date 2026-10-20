@@ -1,6 +1,6 @@
 # GitHub Issue Discord Notifier
 
-A small Go service that checks public GitHub repositories every 30 minutes and
+A small Go service that checks public GitHub repositories every 5 minutes and
 sends newly eligible Issues to Discord. It starts with all open Issues in
 `ray-project/kuberay` and supports multiple repository, label, and Discord
 channel routes without Go code changes.
@@ -150,7 +150,7 @@ To add a repository or channel:
 5. Open **Actions → Monitor GitHub issues → Run workflow**. The first run should
    create only a state commit and no Discord messages.
 
-The workflow runs at minutes 7 and 37 of each hour. GitHub may delay a
+The workflow is scheduled every five minutes. GitHub may delay a
 scheduled workflow during high load. GitHub also automatically disables
 scheduled workflows in inactive public repositories after 60 days; re-enable it
 from the Actions page or make a small reviewed schedule commit.

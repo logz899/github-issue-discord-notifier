@@ -24,3 +24,13 @@ func TestWorkflowAlwaysUsesLatestDefaultBranchState(t *testing.T) {
 		}
 	}
 }
+
+func TestWorkflowRunsEveryFiveMinutes(t *testing.T) {
+	contents, err := os.ReadFile("../../.github/workflows/monitor.yml")
+	if err != nil {
+		t.Fatalf("read workflow: %v", err)
+	}
+	if !strings.Contains(string(contents), `cron: "*/5 * * * *"`) {
+		t.Fatal("workflow does not run every five minutes")
+	}
+}
