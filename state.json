@@ -2,7 +2,7 @@
   "version": 1,
   "monitors": {
     "kuberay-all-issues": {
-      "last_successful_poll": "2026-11-16T23:00:44.538180808Z",
+      "last_successful_poll": "2026-11-17T05:02:16.919290323Z",
       "notified_issue_ids": [
         1164932962,
         1235786725,
